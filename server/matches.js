@@ -90,8 +90,9 @@ function validatePayload(input, data, selfId) {
 
   const candidate = { round, date, kickoff, venueId, homeTeamId, awayTeamId };
 
-  // 同一轮里一支球队只能出现一次
+  // 同一轮里一支球队只能出现一次；已经取消的场次不再占用出场名额
   const sameRound = data.matches.filter((item) => item.id !== selfId && item.round === round
+    && item.status !== '取消'
     && (item.homeTeamId === homeTeamId || item.awayTeamId === homeTeamId
       || item.homeTeamId === awayTeamId || item.awayTeamId === awayTeamId));
   if (sameRound.length > 0) {
